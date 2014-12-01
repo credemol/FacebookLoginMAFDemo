@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf:features xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf">
+  <adfmf:feature id="com.archnal.cxshop.facebook.FacebookLogin" name="FacebookLogin"
+                 listener-class="com.archnal.cxshop.facebook.mobile.listeners.FacebookLoginFeatureLifeCycleListener">
+    <adfmf:content id="com.archnal.cxshop.facebook.FacebookLogin.1">
+      <adfmf:amx file="com.archnal.cxshop.facebook.FacebookLogin/FacebookLogin-task-flow.xml#FacebookLogin-task-flow">
+        <adfmf:includes>
+          <adfmf:include type="JavaScript" file="js/openfb.js" id="i1"/>
+        </adfmf:includes>
+      </adfmf:amx>
+    </adfmf:content>
+  </adfmf:feature>
+</adfmf:features>

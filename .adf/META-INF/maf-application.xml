@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf:application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf"
+                   version="1.0" name="FacebookLoginMAFDemo" id="com.archnal.cxshop.FacebookLoginDemo"
+                   appControllerFolder="ApplicationController"
+                   listener-class="com.archnal.cxshop.facebook.application.LifeCycleListenerImpl"
+                   urlScheme="cxshopfblogin">
+  <adfmf:deviceFeatureAccess>
+    <adfmf:deviceNetwork access="true" id="dn1"/>
+  </adfmf:deviceFeatureAccess>
+  <adfmf:featureReference id="com.archnal.cxshop.facebook.FacebookLogin"/>
+  <adfmf:remoteURLWhiteList>
+    <adfmf:domain id="d2">graph.facebook.com</adfmf:domain>
+    <adfmf:domain id="d1">www.facebook.com</adfmf:domain>
+  </adfmf:remoteURLWhiteList>
+</adfmf:application>

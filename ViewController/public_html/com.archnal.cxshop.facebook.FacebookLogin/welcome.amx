@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="Welcome" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton id="cb1"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+      <amx:commandButton id="cb2" text="Logout" actionListener="#{viewScope.FacebookLoginBean.facebookLogoutClicked}"
+                         action="logout"/>
+    </amx:facet>
+    <!--
+    <amx:panelGroupLayout id="pgl1">
+        <amx:panelLabelAndMessage label="ID" id="plam1">
+        <amx:outputText value="#{applicationScope.facebook_id}" id="ot2"/>
+      </amx:panelLabelAndMessage>
+      <amx:panelLabelAndMessage label="Username" id="plam2">
+        <amx:outputText value="#{applicationScope.facebook_username}" id="ot3"/>
+      </amx:panelLabelAndMessage>
+      <amx:panelLabelAndMessage label="Email" id="plam3">
+        <amx:outputText value="#{applicationScope.facebook_email}" id="ot4"/>
+      </amx:panelLabelAndMessage>
+    </amx:panelGroupLayout>
+    -->
+    <amx:panelFormLayout id="pfl1">
+      <amx:inputText label="ID" value="#{applicationScope.facebook_id}" id="it1" readOnly="true"/>
+      <amx:inputText label="Username" value="#{applicationScope.facebook_username}" id="it2" readOnly="true"/>
+      <amx:inputText label="Email" value="#{applicationScope.facebook_email}" id="it3" readOnly="true"/>
+      <amx:inputText label="First Name" value="#{applicationScope.facebook_firstName}" id="it4" readOnly="true"/>
+      <amx:inputText label="Middle Name" value="#{applicationScope.facebook_middleName}" id="it5" readOnly="true"/>
+      <amx:inputText label="Last Name" value="#{applicationScope.facebook_lastName}" id="it6" readOnly="true"/>
+      <amx:inputText label="Gender" value="#{applicationScope.facebook_gender}" id="it7" readOnly="true"/>
+      <amx:inputText label="Birthday" value="#{applicationScope.facebook_birthday}" id="it8" readOnly="true"/>
+      <amx:inputText label="Link" value="#{applicationScope.facebook_link}" id="it9" readOnly="true"/>
+      <amx:inputText label="Timezone" value="#{applicationScope.facebook_timezone}" id="it10" readOnly="true"/>
+    </amx:panelFormLayout>
+  </amx:panelPage>
+</amx:view>

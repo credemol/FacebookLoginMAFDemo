@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="CX Shop" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton id="cb1"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+      <amx:commandButton id="cb2"/>
+    </amx:facet>
+    <amx:panelGroupLayout id="pgl1" halign="center">
+      <amx:commandLink text="" id="cl1" 
+                       actionListener="#{viewScope.FacebookLoginBean.facebookLoginClicked}">
+        <amx:image id="i1" source="/images/facebook_login.png"/>
+        <amx:setPropertyListener id="spl1" to="#{applicationScope.refreshFacebookProfile}" from="#{'true'}"/>
+      </amx:commandLink>
+    </amx:panelGroupLayout>
+  </amx:panelPage>
+</amx:view>

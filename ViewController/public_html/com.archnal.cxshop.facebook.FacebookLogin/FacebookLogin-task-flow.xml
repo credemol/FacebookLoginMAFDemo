@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <task-flow-definition id="FacebookLogin-task-flow">
+    <default-activity>autoLoginRouter</default-activity>
+    <managed-bean id="__7">
+      <managed-bean-name>FacebookLoginBean</managed-bean-name>
+      <managed-bean-class>com.archnal.cxshop.facebook.mobile.beans.FacebookLoginBean</managed-bean-class>
+      <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__8">
+      <managed-bean-name>FacebookProfileBean</managed-bean-name>
+      <managed-bean-class>com.archnal.cxshop.facebook.mobile.beans.FacebookProfileBean</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="facebook_login">
+      <page>/com.archnal.cxshop.facebook.FacebookLogin/facebook_login.amx</page>
+    </view>
+    <view id="welcome">
+      <page>/com.archnal.cxshop.facebook.FacebookLogin/welcome.amx</page>
+    </view>
+    <router id="autoLoginRouter">
+      <case id="__6">
+        <expression>#{applicationScope.autoLoginSuccess}</expression>
+        <outcome>autoLogin</outcome>
+      </case>
+      <default-outcome>goFacebookLogin</default-outcome>
+    </router>
+    <control-flow-rule id="__1">
+      <from-activity-id>autoLoginRouter</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>goFacebookLogin</from-outcome>
+        <to-activity-id>facebook_login</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__3">
+        <from-outcome>autoLogin</from-outcome>
+        <to-activity-id>welcome</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>facebook_login</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>goWelcome</from-outcome>
+        <to-activity-id>welcome</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__9">
+      <from-activity-id>welcome</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome>logout</from-outcome>
+        <to-activity-id>facebook_login</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-mobile-config>
