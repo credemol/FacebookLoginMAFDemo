@@ -5,7 +5,13 @@
     //window.close();
     //alert("cxshopfb://?fb_callback=" + window.location.href);
     //window.open("cxshopfblogin://?fb_callback=" + window.location.href, '_blank', 'location=no');
-    window.location="cxshopfblogin://?fb_callback=" + window.location.href;
+	alert('oauthcallback: ' + window.location.href);
+    var _href = window.location.href;
+
+    var applink = "cxshopfblogin://fb_callback/" + _href.substring(_href.indexOf('?') + 1);
+    alert(applink);
+    window.location=applink;
+    //window.location="cxshopfblogin://?fb_callback=" + window.location.href;
     //window.close();
     //window.location="cxshopfb://?fb_callback=" + window.location.href;
 </script>
