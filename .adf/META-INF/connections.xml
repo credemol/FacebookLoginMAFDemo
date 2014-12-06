@@ -9,4 +9,51 @@
       </XmlRefAddr>
     </RefAddresses>
   </Reference>
+  <Reference name="FB_CALLBACK" className="oracle.adf.model.connection.url.HttpURLConnection" xmlns="">
+    <Factory className="oracle.adf.model.connection.url.URLConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="FB_CALLBACK">
+        <Contents>
+          <urlconnection name="FB_CALLBACK" url="http://macbook.nicholas.com/openfb/fb_login.html"/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
+  <Reference name="FB_OAUTH" className="oracle.adf.model.connection.adfmf.LoginConnection"
+             adfCredentialStoreKey="FB_OAUTH" partial="false" manageInOracleEnterpriseManager="true" deployable="true"
+             xmlns="">
+    <Factory className="oracle.adf.model.connection.adfmf.LoginConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="adfmfLogin">
+        <Contents>
+          <oauthAuthorizationGrantType value="code"/>
+          <oauthClientId value="117708588361712"/>
+          <oauthClientSecret value="0118oq84445ssn913nno9367npqn2npo"/>
+          <oauthAuthorizationEndpoint url="https://www.facebook.com/dialog/oauth"/>
+          <oauthTokenEndpoint url="https://graph.facebook.com/oauth/access_token"/>
+          <oauthRedirectEndpoint url="http://macbook.nicholas.com/openfb/oauthcallback.html"/>
+          <logout url="http://macbook.nicholas.com/openfb/logoutcallback.html"/>
+          <embeddedBrowser value="true"/>
+          <oauthScopes>
+            <oauthScope url="email"/>
+            <oauthScope url="read_stream"/>
+            <oauthScope url="publish_stream"/>
+          </oauthScopes>
+          <authenticationMode value="remote"/>
+          <accessControl/>
+          <userObjectFilter/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
+  <Reference name="FB_API" className="oracle.adf.model.connection.url.HttpURLConnection" xmlns="">
+    <Factory className="oracle.adf.model.connection.url.URLConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="FB_API">
+        <Contents>
+          <urlconnection name="FB_API" url="https://api.facebook.com"/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
 </References>

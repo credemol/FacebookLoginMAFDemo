@@ -89,4 +89,19 @@
       <property
          name="sdm:polyPoints">T56,350.5,255.53516,355.5,174.08519,B56</property>
    </ControlFlowCase>
+   <View
+      id="View9">
+      <property
+         name="activityId">local-html</property>
+      <property
+         name="page">/com.archnal.cxshop.facebook.FacebookLogin/local-html.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>local-html&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-2.1328125</property>
+      <property
+         name="x">304.0</property>
+   </View>
 </SDM>

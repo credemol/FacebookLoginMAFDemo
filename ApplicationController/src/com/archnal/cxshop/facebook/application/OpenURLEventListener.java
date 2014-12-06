@@ -42,13 +42,13 @@ public class OpenURLEventListener implements EventListener {
 
         
         int index = -1;
-        if((index = url.indexOf("?fb_callback=")) > -1) {
-            String fb_url = url.substring(index + "?fb_callback=".length());
+        if((index = url.indexOf("fb_callback")) > -1) {
+            String fb_url = url.substring(index + "fb_callback/".length());
        
             processOauthCallback(fb_url);
             //AdfmfJavaUtilities.setELValue("#{applicationScope.facebookProfile}", profile);
-        } else if((index = url.indexOf("?fb_logout=")) > -1) {
-            String fb_url = url.substring(index + "?fb_logout=".length());
+        } else if((index = url.indexOf("fb_logout")) > -1) {
+            String fb_url = url.substring(index + "fb_logout/".length());
             
             processLogout(fb_url);
         }
@@ -57,7 +57,8 @@ public class OpenURLEventListener implements EventListener {
     }
     
     private void processOauthCallback(String fb_url) {
-        String queryString = fb_url.substring(fb_url.indexOf('#') + 1);
+        //String queryString = fb_url.substring(fb_url.indexOf('#') + 1);
+        String queryString = (fb_url.charAt(0) == '#' || fb_url.charAt(0) == '?') ? fb_url.substring(1) : fb_url;
         StringTokenizer tokenizer = new StringTokenizer(queryString, "&");
         
         
@@ -84,9 +85,18 @@ public class OpenURLEventListener implements EventListener {
         }
         TraceLog.info(getClass(), "processOauthCallback", "Complete to parse URL");
         
+
         
         String accessToken = (String) AdfmfJavaUtilities.getELValue("#{applicationScope.access_token}");
         TraceLog.info(getClass(), "processOauthCallback", "accessToken: " + accessToken);
+
+        if(accessToken == null || accessToken.trim().length() == 0) {
+            AdfmfJavaUtilities.setELValue("#{applicationScope.autoLoginSuccess}", Boolean.FALSE);
+            
+            AdfmfContainerUtilities.resetFeature("com.archnal.cxshop.facebook.FacebookLogin", true);
+            
+            return;   
+        }
 
         String expiresIn = (String) AdfmfJavaUtilities.getELValue("#{applicationScope.expires_in}");
         TraceLog.info(getClass(), "processOauthCallback", "expiresIn: " + expiresIn);
@@ -110,15 +120,25 @@ public class OpenURLEventListener implements EventListener {
         
         FacebookProfileCopier.copyProfile(me);     
         
+        //AdfmfJavaUtilities.setELValue("#{securityContext.userName}", me.getId());
+        //AdfmfJavaUtilities.setELValue("#{securityContext.authenticated}", Boolean.TRUE);
+        
         AdfmfJavaUtilities.setELValue("#{applicationScope.autoLoginSuccess}", Boolean.TRUE);
-        AdfmfContainerUtilities.resetFeature("com.archnal.cxshop.facebook.FacebookLogin");
+        
+        AdfmfContainerUtilities.resetFeature("com.archnal.cxshop.facebook.FacebookLogin", true);
+        
         
     }
 
     private void processLogout(String fb_url) {
         TraceLog.info(getClass(), "processLogout", "START - fb_url: " + fb_url);
+        
         facebookProfileRepository.clearProfile();
         FacebookProfileCopier.clearProfile();
+        AdfmfJavaUtilities.setELValue("#{applicationScope.access_token}", "");
+        AdfmfJavaUtilities.setELValue("#{applicationScope.expires_in}", "");
+        
+        
         TraceLog.info(getClass(), "processLogout", "END ");
     }
     

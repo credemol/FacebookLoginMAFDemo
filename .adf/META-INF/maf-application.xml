@@ -8,8 +8,10 @@
     <adfmf:deviceNetwork access="true" id="dn1"/>
   </adfmf:deviceFeatureAccess>
   <adfmf:featureReference id="com.archnal.cxshop.facebook.FacebookLogin"/>
+  <adfmf:login defaultConnRefId="FB_OAUTH"/>
   <adfmf:remoteURLWhiteList>
-    <adfmf:domain id="d2">graph.facebook.com</adfmf:domain>
-    <adfmf:domain id="d1">www.facebook.com</adfmf:domain>
+    <adfmf:domain id="d2">*.facebook.com</adfmf:domain>
+    <adfmf:domain id="d1">macbook.nicholas.com</adfmf:domain>
+    <adfmf:domain id="d3">*.akamaihd.net</adfmf:domain>
   </adfmf:remoteURLWhiteList>
 </adfmf:application>

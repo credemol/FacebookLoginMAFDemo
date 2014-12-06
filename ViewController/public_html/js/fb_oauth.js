@@ -1,4 +1,4 @@
-
+/*
 FB.init({appId: '117708588361712'});
 
 login = function() {
@@ -10,3 +10,4 @@ logout = function(token) {
     alert('logout');
     FB.logout();
 }
+*/

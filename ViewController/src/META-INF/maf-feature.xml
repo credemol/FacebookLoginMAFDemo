@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <adfmf:features xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf">
   <adfmf:feature id="com.archnal.cxshop.facebook.FacebookLogin" name="FacebookLogin"
-                 listener-class="com.archnal.cxshop.facebook.mobile.listeners.FacebookLoginFeatureLifeCycleListener">
+                 listener-class="com.archnal.cxshop.facebook.mobile.listeners.FacebookLoginFeatureLifeCycleListener"
+                 securityEnabled="false">
+    <adfmf:constraints/>
+    <adfmf:content id="com.archnal.cxshop.facebook.FacebookLogin.3">
+      <adfmf:constraints>
+        <adfmf:constraintExpression value="#{applicationScope.AuthBean.authenticated == false}" id="ce1"/>
+        <adfmf:constraint property="device.model" operator="contains" value="xxx" id="c1"/>
+      </adfmf:constraints>
+      <adfmf:remoteURL connection="FB_CALLBACK" showNavButtons="false"/>
+    </adfmf:content>
     <adfmf:content id="com.archnal.cxshop.facebook.FacebookLogin.1">
       <adfmf:amx file="com.archnal.cxshop.facebook.FacebookLogin/FacebookLogin-task-flow.xml#FacebookLogin-task-flow">
         <adfmf:includes>
           <adfmf:include type="JavaScript" file="js/openfb.js" id="i1"/>
+          <adfmf:include type="JavaScript" file="js/facebook_sdk.js" id="i2"/>
         </adfmf:includes>
       </adfmf:amx>
     </adfmf:content>

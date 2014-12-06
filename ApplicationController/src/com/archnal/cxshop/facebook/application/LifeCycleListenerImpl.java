@@ -115,12 +115,20 @@ public class LifeCycleListenerImpl implements LifeCycleListener
       TraceLog.info(getClass(), "start", "profile: " + profile) ;
       if(profile != null) {
         if(profile.getExpirationDate().after(new Date())) {
-            TraceLog.info(getClass(), "start", "access token is valid.");
-            AdfmfJavaUtilities.setELValue("#{applicationScope.access_token}", profile.getAccessToken());
-            AdfmfJavaUtilities.setELValue("#{applicationScope.autoLoginSuccess}", Boolean.TRUE);
-            
             MeResponse me = facebookRestClient.executeFacebookMe(profile.getAccessToken());
-            FacebookProfileCopier.copyProfile(me);
+            
+            TraceLog.info(getClass(), "start", "me: " + me);
+            if(me != null) {
+                TraceLog.info(getClass(), "start", "access token is valid.");
+                AdfmfJavaUtilities.setELValue("#{applicationScope.access_token}", profile.getAccessToken());
+                AdfmfJavaUtilities.setELValue("#{applicationScope.autoLoginSuccess}", Boolean.TRUE);
+                FacebookProfileCopier.copyProfile(me);
+            } else {
+                facebookProfileRepository.clearProfile();
+                AdfmfJavaUtilities.setELValue("#{applicationScope.autoLoginSuccess}", Boolean.FALSE);
+                
+            }
+            
             
             //AdfmfJavaUtilities.setELValue("#{applicationScope.refreshFacebookProfile}", "true");
             

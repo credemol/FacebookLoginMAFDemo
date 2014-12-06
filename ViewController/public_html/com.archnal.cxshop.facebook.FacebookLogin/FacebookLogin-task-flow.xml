@@ -25,6 +25,9 @@
       </case>
       <default-outcome>goFacebookLogin</default-outcome>
     </router>
+    <view id="local-html">
+      <page>/com.archnal.cxshop.facebook.FacebookLogin/local-html.amx</page>
+    </view>
     <control-flow-rule id="__1">
       <from-activity-id>autoLoginRouter</from-activity-id>
       <control-flow-case id="__2">

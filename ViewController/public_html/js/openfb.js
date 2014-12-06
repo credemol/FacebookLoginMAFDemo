@@ -21,6 +21,7 @@ var openFB = (function () {
 
         //baseURL = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + context,
         baseURL = "http://macbook.nicholas.com/openfb",
+        
         oauthRedirectURL = baseURL + '/oauthcallback.html',
 
         logoutRedirectURL = baseURL + '/logoutcallback.html',
@@ -39,7 +40,8 @@ var openFB = (function () {
     console.log(logoutRedirectURL);
 
     document.addEventListener("deviceready", function () {
-        runningInCordova = false; // <== true
+    // FIXED
+        runningInCordova = false; // true
     }, false);
 
     /**
@@ -131,12 +133,13 @@ var openFB = (function () {
 //        logout();
 
         if (runningInCordova) {
-            oauthRedirectURL = "https://www.facebook.com/connect/login_success.html";
+            // FIXED 1
+            //oauthRedirectURL = "https://www.facebook.com/connect/login_success.html";
         }
 
         startTime = new Date().getTime();
         loginWindow = window.open(FB_LOGIN_URL + '?client_id=' + fbAppId + '&redirect_uri=' + oauthRedirectURL +
-            '&response_type=token&scope=' + scope, '_self', 'location=no');
+            '&response_type=token&scope=' + scope, '_blank', 'location=no');
 
         // If the app is running in Cordova, listen to URL changes in the InAppBrowser until we get a URL with an access_token or an error
         if (runningInCordova) {
@@ -148,27 +151,13 @@ var openFB = (function () {
 
     }
 
-    function oauthCallback(url) {
-        alert("oauthCallback: url");
-
-        adf.mf.api.invokeMethod("com.archnal.cxshop.facebook.mobile.beans.FacebookLoginUtil", 
-            "handleAccessToken", 
-            url,
-            function() {
-                alert("success");
-            },
-            function() {
-                alert("failed");
-            });
-    }
-
     /**
      * Called either by oauthcallback.html (when the app is running the browser) or by the loginWindow loadstart event
      * handler defined in the login() function (when the app is running in the Cordova/PhoneGap container).
      * @param url - The oautchRedictURL called by Facebook with the access_token in the querystring at the ned of the
      * OAuth workflow.
      */
-    function oauthCallback____original(url) {
+    function oauthCallback(url) {
         // Parse the OAuth data received from Facebook
         var queryString,
             obj;
@@ -193,36 +182,17 @@ var openFB = (function () {
      * IMPORTANT: For the Facebook logout to work, the logoutRedirectURL must be on the domain specified in "Site URL" in your Facebook App Settings
      *
      */
-    function logout______original(callback) {
-        var logoutWindow,
-            token = tokenStore['fbtoken'];
-
+    function logout(token, callback) {
+        //var logoutWindow,
+        //    token = tokenStore['fbtoken'];
+        var logoutWindow;
+        
         /* Remove token. Will fail silently if does not exist */
         tokenStore.removeItem('fbtoken');
 
+        alert("token: " + token);
         if (token) {
-            logoutWindow = window.open(FB_LOGOUT_URL + '?access_token=' + token + '&next=' + logoutRedirectURL, '_blank', 'location=no');
-            if (runningInCordova) {
-                setTimeout(function() {
-                    logoutWindow.close();
-                }, 700);
-            }
-        }
-
-        if (callback) {
-            callback();
-        }
-
-    }
-    
-    function logout(token, callback) {
-        var logoutWindow;
-
-
-        if (token) {
-            alert(FB_LOGOUT_URL + '?access_token=' + token + '&next=' + logoutRedirectURL);
-            
-            logoutWindow = window.open(FB_LOGOUT_URL + '?access_token=' + token + '&next=' + logoutRedirectURL, '_blank', 'location=no');
+            logoutWindow = window.open(FB_LOGOUT_URL + '?access_token=' + token + '&next=' + logoutRedirectURL, '_blank', 'location=no,clearcache=yes');
             if (runningInCordova) {
                 setTimeout(function() {
                     logoutWindow.close();
@@ -234,7 +204,7 @@ var openFB = (function () {
         //    callback();
         //}
 
-    }    
+    }
 
     /**
      * Lets you make any Facebook Graph API request.
@@ -329,6 +299,7 @@ var openFB = (function () {
     //  openFB.init({appId: 'YOUR_FB_APP_ID', tokenStore: window.localStorage});
 
     login = function() {
+        //alert('login');
         openFB.login(
                 function(response) {
                     if(response.status === 'connected') {
@@ -336,7 +307,7 @@ var openFB = (function () {
                     } else {
                         alert('Facebook login failed: ' + response.error);
                     }
-                }, {scope: 'email,read_stream,publish_stream'});
+                }, {scope: 'email,read_stream'});
     };
 
     getInfo = function() {
@@ -379,6 +350,8 @@ var openFB = (function () {
                 errorHandler);
     };
     logout = function(token) {
+        //FB.init({appId:'117708588361712', status:true, cookie:true, xfbml:true});
+        
         alert("logout() - token: " + token);
         openFB.logout(token,
                 function() {
